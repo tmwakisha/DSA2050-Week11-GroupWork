@@ -1,0 +1,11 @@
+{
+  "selected_model": "Logistic regression",
+  "best_params": {
+    "model__C": 1
+  },
+  "primary_metric": "f1",
+  "cv_mean_f1": 0.47009865843703824,
+  "rationale": "Logistic regression (C=1) is selected because it achieves the stronger mean F1 under the prespecified identical five-fold stratified CV: 0.470 (SD 0.053), compared with 0.398 (SD 0.049) for the best tree. The 0.072 mean-F1 advantage is material, although logistic regression's fold variation is slightly higher. Its out-of-fold churn recall is only 0.378, with 566 false negatives among 910 churners, so missed churn remains a serious limitation. Recall is particularly low for Established customers (0.216; 509 of 649 churners missed), compared with 0.782 for New customers (57 of 261 missed); this disparity warrants cautious investigation. Logistic regression is a comparatively simple, regularized model and is the strongest tested candidate, not a deployment-ready solution. Before operational use, validate on representative real data, assess subgroup performance and the costs of false negatives, and consider a decision threshold only in a separately justified development process.",
+  "random_seed": 42,
+  "scikit_learn_version": "1.9.1"
+}
