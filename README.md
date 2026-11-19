@@ -30,7 +30,7 @@ Numeric features use median imputation and standard scaling. Categorical feature
 
 All candidates used identical five-fold stratified cross-validation (`n_splits=5`, `shuffle=True`, `random_state=42`) and F1 as the primary selection metric. The prescribed grids were logistic regression (`C = 0.1, 1, 10`) and decision tree (`max_depth = 3, 5, 8`). The dummy majority-class baseline had **0.000 churn F1 in every fold**: predicting everyone as retained might yield about 66.5% accuracy, but detects no churners.
 
-The table reports the best mean-F1 setting within each model family. The full log, including all six settings and fold scores, is [`reports/experiment_log.csv`](reports/experiment_log.csv).
+The table reports the best mean-F1 setting within each model family. The full log, including all six settings and fold scores, is `reports/experiment_log.csv`.
 
 | Model | Best setting | Mean F1 | F1 SD | Fold F1 scores (1–5) | Mean precision | Mean recall |
 |---|---:|---:|---:|---|---:|---:|
@@ -43,13 +43,12 @@ The table reports the best mean-F1 setting within each model family. The full lo
 
 Its mean F1 exceeds the best decision tree by **0.0716**, and its mean recall is higher (0.3780 vs. 0.3176). Its fold SD is slightly higher (0.0527 vs. 0.0487), so it is not the more stable candidate by this estimate; however, the mean-F1 advantage is substantial under the prespecified comparison. Logistic regression at `C=10` produced the same displayed scores as `C=1`, so the tested results do not demonstrate a benefit from the less-regularized setting. This is the strongest tested candidate, not a deployment-ready model.
 
-The choice and rationale were saved in [`reports/frozen_selection.json`](reports/frozen_selection.json) **before** the final-test evaluation.
+The choice and rationale were saved in `reports/frozen_selection.json` **before** the final-test evaluation.
 
 ## Errors
 
-Out-of-fold development predictions give churn recall of **0.378**. There are **566 false negatives** (actual churners predicted to stay) and **205 false positives** (retained customers flagged as churn risks). False negatives can mean missed opportunities for retention action; false positives can use retention resources unnecessarily. The confusion matrix is [`reports/development_confusion_matrix.png`](reports/development_confusion_matrix.png).
+Out-of-fold development predictions give churn recall of **0.378**. There are **566 false negatives** (actual churners predicted to stay) and **205 false positives** (retained customers flagged as churn risks). False negatives can mean missed opportunities for retention action; false positives can use retention resources unnecessarily. The confusion matrix is `reports/development_confusion_matrix.png`.
 
-![Out-of-fold development confusion matrix](reports/development_confusion_matrix.png)
 
 ## Subgroup findings
 
@@ -58,7 +57,7 @@ Out-of-fold development predictions give churn recall of **0.378**. There are **
 | Established | 2,268 | 649 | 0.2157 | 0.5932 | 509 |
 | New | 452 | 261 | 0.7816 | 0.6518 | 57 |
 
-Established-customer recall is markedly lower than New-customer recall in the out-of-fold development predictions. Treat this as a concerning result in this synthetic dataset and analysis, not a guaranteed real-population difference. The metrics are available in [`reports/subgroup_metrics.csv`](reports/subgroup_metrics.csv).
+Established-customer recall is markedly lower than New-customer recall in the out-of-fold development predictions. Treat this as a concerning result in this synthetic dataset and analysis, not a guaranteed real-population difference. The metrics are available in `reports/subgroup_metrics.csv`.
 
 ## Permutation importance
 
@@ -69,9 +68,8 @@ On a held-out 25% slice of development data, importance was measured as mean F1 
 | `tenure_months` | 0.0787 | 0.0237 |
 | `support_tickets_90d` | 0.0350 | 0.0157 |
 
-`tenure_months` is the feature with the highest measured predictive reliance, followed by `support_tickets_90d`. Permutation importance is **not evidence of causation**. Correlated features may share or mask importance, and estimates can vary with the validation sample and fitted model. See [`reports/permutation_importance.csv`](reports/permutation_importance.csv) and [`reports/permutation_importance.png`](reports/permutation_importance.png).
+`tenure_months` is the feature with the highest measured predictive reliance, followed by `support_tickets_90d`. Permutation importance is **not evidence of causation**. Correlated features may share or mask importance, and estimates can vary with the validation sample and fitted model. See `reports/permutation_importance.csv` and `reports/permutation_importance.png`.
 
-![Permutation importance plot](reports/permutation_importance.png)
 
 ## Final metrics
 
@@ -91,7 +89,7 @@ Confusion matrix (rows = actual, columns = predicted; class order = stayed, chur
 | **Actual stayed** | 393 | 59 |
 | **Actual churn** | 145 | 83 |
 
-Final-test F1 is 0.0215 below the development CV mean of 0.4701, broadly consistent with the CV estimate. Recall remains low: **145 of 228 actual churners were missed** on the final test. The result was not used to retune or select another model. Machine-readable metrics are in [`reports/final_metrics.json`](reports/final_metrics.json).
+Final-test F1 is 0.0215 below the development CV mean of 0.4701, broadly consistent with the CV estimate. Recall remains low: **145 of 228 actual churners were missed** on the final test. The result was not used to retune or select another model. Machine-readable metrics are in `reports/final_metrics.json`.
 
 ## Limitations
 
@@ -108,17 +106,3 @@ Before real deployment, validate on representative, time-separated data; verify 
 3. **Which feature was highest in permutation importance, and why does that not imply causation?** `tenure_months` ranked highest, with a mean F1 reduction of **0.0787** when shuffled. This indicates that this fitted model relied on tenure for predictions on the held-out development slice; it does not show that tenure causes churn. Correlated predictors may share or mask importance, and the result is specific to the model and validation sample.
 4. **Compare final-test F1 with mean CV F1. Did your model generalize reasonably?** Final-test F1 was **0.4486**, compared with mean development CV F1 **0.4701**, a decrease of **0.0215**. This is a modest difference and suggests broadly reasonable generalization to this synthetic test set. However, final recall was only 0.3640 and the model missed 145 of 228 actual churners, so performance is not sufficient evidence of deployment readiness.
 5. **State two limitations of this synthetic dataset and one step you would take before deploying a real churn model.** First, synthetic records may not represent real Kenyan customer behaviour, data collection, missingness, or churn prevalence. Second, the exercise does not establish real prediction-time feature availability or the business costs and outcomes of retention interventions. Before deployment, I would validate the frozen modelling approach on representative, time-separated real customer data, while verifying feature timing and measuring subgroup performance and intervention costs.
-
-## Reproduce
-
-Use Python 3.10–3.13 if available. From the repository root:
-
-```bash
-python -m venv .venv
-# macOS/Linux: source .venv/bin/activate
-# Windows PowerShell: .venv\\Scripts\\Activate.ps1
-python -m pip install -r requirements.txt
-jupyter notebook notebooks/Week9_Model_Selection_Lab.ipynb
-```
-
-The notebook has been run end to end. If `reports/final_metrics.json` already exists, the final evaluation cell displays the saved results instead of evaluating the test data again. Preserve this guard; do not delete that file to obtain a new score unless instructed to conduct a separately versioned evaluation.
