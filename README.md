@@ -69,16 +69,16 @@ Permutation importance was measured on a held-out 25% slice of development data 
 
 ## Final metrics
 
-The final-test data were held aside during development analysis and model selection. After the selection was recorded, the pipeline was refit on all development data and evaluated once on **680 final-test records**.
+After the model choice was frozen, logistic regression (`C=1`) was refit on all development records and evaluated once on the **680-record final test set**.
 
-| Metric | Final-test result |
+| Final-test measure | Score |
 |---|---:|
 | Accuracy | 0.7000 |
 | F1 | 0.4486 |
 | Precision | 0.5845 |
 | Recall | 0.3640 |
 
-Final-test F1 (**0.4486**) is 0.0215 lower than the mean cross-validation F1 (**0.4701**). This modest difference suggests broadly similar performance on the held-out synthetic test set. However, final recall is 0.3640, meaning **145 of 228 actual churners were missed**. The final confusion matrix is included in the completed notebook; it is not reproduced in this README. Final-test results were not used to change the model or its settings.
+The final F1 score is **0.0215 lower** than the development cross-validation mean of 0.4701. Recall of 0.3640 means the model identified about 36 out of every 100 customers who churned; **145 of the 228 actual churners were missed**. The final confusion matrix is shown in the completed notebook and is not duplicated here. These test results were not used to change the selected model or its settings.
 
 ## Limitations
 
