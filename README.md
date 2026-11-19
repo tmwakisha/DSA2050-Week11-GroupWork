@@ -4,11 +4,9 @@
 
 A reproducible customer-churn modelling practical using a synthetic teaching dataset. The work compares models fairly, examines their errors and limitations, freezes a selection, and evaluates it once on a held-out final test set.
 
-> **Course submission:** The handout specifies existing groups and one repository per group. This working copy was completed solo at the user's request. Please confirm with the instructor that an individual submission is permitted. Add the correct student ID below before submitting.
-
 | Author | Student ID | Contribution |
 |---|---|---|
-| Tamara Mwakisha | **Add student ID** | Data inspection, leakage prevention, modelling, evaluation, analysis, rationale, and documentation. |
+| Tamara Mwakisha | 660146 | Data inspection, leakage prevention, modelling, evaluation, analysis, rationale, and documentation. |
 
 ---
 
