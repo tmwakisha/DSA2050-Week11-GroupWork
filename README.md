@@ -78,7 +78,7 @@ After the model choice was frozen, logistic regression (`C=1`) was refit on all 
 | Precision | 0.5845 |
 | Recall | 0.3640 |
 
-The final F1 score is **0.0215 lower** than the development cross-validation mean of 0.4701. Recall of 0.3640 means the model identified about 36 out of every 100 customers who churned; **145 of the 228 actual churners were missed**. The final confusion matrix is shown in the completed notebook and is not duplicated here. These test results were not used to change the selected model or its settings.
+The final F1 score is **0.0215 lower** than the development cross-validation mean of 0.4701. Recall of 0.3640 means the model identified about 36 out of every 100 customers who churned; **145 of the 228 actual churners were missed**. The final confusion matrix is shown in the completed notebook. These test results were not used to change the selected model or its settings.
 
 ## Limitations
 
