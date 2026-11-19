@@ -1,10 +1,10 @@
-**Group name/number:** [Add your official course group name/number]
+# DSA2050A - Week 11 Lab
+
+**Submission:** Individual work
 
 | Member name | Student ID | Contribution |
 |---|---:|---|
 | Tamara Mwakisha | 660146 | Data inspection, leakage prevention, modelling, evaluation, error and subgroup analysis, permutation importance, model rationale, final testing, and documentation. |
-
-# DSA 2050A · Week 9
 
 ## Model Selection & Defensible Evaluation
 
